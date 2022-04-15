@@ -63,6 +63,7 @@ export class WidgetComponent implements OnInit, OnDestroy {
   }
     
   generateRandomCombinations(number){
+    this.combos = [];
     if(this.libData && this.libData.length > 0){
         for(let b = 0; b <= number; b++){
           const randomLib = (Math.random() * (this.libData.length - 1 + 1) ) << 0;
