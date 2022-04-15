@@ -26,3 +26,34 @@
 
 
 }
+
+.demo-container{
+  display: flex;
+  flex-wrap: wrap;
+  .demo-item{
+    border: 1px solid grey;
+    flex-grow: 1;
+    min-width: 33%;
+    display: flex;
+    justify-content: center;
+    padding: 30px 10px;
+    h3{
+      .blank{
+        position: relative;
+        display: inline-block;
+      }
+      .super{
+        position: absolute;
+        font-size: 10px;
+        top: -14px;
+        display: block;
+        text-align: center;
+        white-space: nowrap;
+        transform: translateX(-25%);
+    
+      }
+    }
+  }
+
+
+}
