@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class WidgetService {
   public masterSource = new BehaviorSubject<any>([]);
   offset = 'A2';
   limit = 'Z999';
-  apikey = "AIzaSyB7gsrkW6slHXQukg5FlaYtfhuhsf6lXow"; 
+  apikey = environment.apiKey; 
   base = `https://sheets.googleapis.com/v4/spreadsheets/`;
   masterSheetId ="1eDjlSYP4CcHv8M4Mpp-h1s9QjifTDgfQO5xnbwYuAkY";
   
