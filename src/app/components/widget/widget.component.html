@@ -1,0 +1,13 @@
+<div class="wid-container">
+  <owl-carousel
+  [options]="{items: 1, dots: false, navigation: false, loop:true, autoplay:true}"
+  [items]="combos"
+  [carouselClasses]="['owl-theme', 'row', 'sliding']">
+  <div class="item wid-item" *ngFor="let combo of combos;let i = index">
+    <h3 [innerHTML]="combo"></h3>
+  </div>
+</owl-carousel>
+</div>
+
+
+
