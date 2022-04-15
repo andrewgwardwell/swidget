@@ -13,6 +13,7 @@ export class WidgetComponent implements OnInit, OnDestroy {
   libData: Array<{id: string, spaces: string, text: string, commData: any}> = [];
   combos = [];
   timer: any;
+  refreshInt: any;
   slideConfig = {"slidesToShow": 4, "slidesToScroll": 4};
   constructor(public widgetService: WidgetService) { }
 
@@ -50,66 +51,44 @@ export class WidgetComponent implements OnInit, OnDestroy {
           const libDataInd = this.libData.findIndex(i => i.id == id);
           this.libData[libDataInd].commData = val.values;
         });
-        console.log(this.libData);
-        this.timer = setInterval(() => this.generateRandomCombinations(), 900)
+        this.generateRandomCombinations(20);
+        this.refreshInt = setInterval(() => this.refreshData(), 60000);
       }
     );    
   }
 
-  addSlide() {
-    // this.slides.push(488)
+  refreshData(){
+    clearInterval(this.refreshInt);
+    this.fetchLiveData();
   }
-
-  removeSlide() {
-    // this.slides.length = this.slides.length - 1;
-  }
-
-  slickInit(e: any) {
-    console.log('slick initialized');
-  }
-
-  breakpoint(e: any) {
-    console.log('breakpoint');
-  }
-
-  afterChange(e: any) {
-    console.log('afterChange');
-  }
-
-  beforeChange(e: any) {}
     
-
-  generateRandomCombinations(){
-    let combos = this.combos;
-    if(this.combos.length > 20){
-      clearInterval(this.timer);
-    }
+  generateRandomCombinations(number){
     if(this.libData && this.libData.length > 0){
-      this.libData.forEach((data) => {
-        const numberOfBlanks = parseInt(data.spaces);
-        let toFill = new String(data.text);
-        const values = [];
-        const userData = data.commData;
-        const between = new RegExp('(?<={).*?(?=})', 'g');
-        const matches = toFill.match(between);
-        // pick randomly from commddata
-        for(let i = 0; i <= numberOfBlanks; i++){
-          const randomRow = (Math.random() * (userData.length - 1 + 1) ) << 0;
-          const val = userData[randomRow][i];
-          const nameSpot = numberOfBlanks;
-          const ageSpot = numberOfBlanks + 1;
-          const userName = userData[randomRow][nameSpot];
-          const userAge = userData[randomRow][ageSpot];
-          const userInfo = userName ? `<div class="super">${(userName && userAge ? userName+', '+userAge : userName)}</div>` : '';
-          const valHtml = `<span class="blank">${userInfo}${val}</span>`;
-          toFill = toFill.replace(`{${matches[i]}}`, valHtml);
+        for(let b = 0; b <= number; b++){
+          const randomLib = (Math.random() * (this.libData.length - 1 + 1) ) << 0;
+          const data = this.libData[randomLib];
+          const numberOfBlanks = parseInt(data.spaces);
+          let toFill = new String(data.text);
+          const values = [];
+          const userData = data.commData;
+          const between = new RegExp('(?<={).*?(?=})', 'g');
+          const matches = toFill.match(between);
+          // pick randomly from commddata
+          for(let i = 0; i <= numberOfBlanks; i++){
+            const randomRow = (Math.random() * (userData.length - 1 + 1) ) << 0;
+            const val = userData[randomRow][i];
+            const nameSpot = numberOfBlanks;
+            const ageSpot = numberOfBlanks + 1;
+            const userName = userData[randomRow][nameSpot];
+            const userAge = userData[randomRow][ageSpot];
+            const userInfo = userName ? `<div class="super">${(userName && userAge ? userName+', '+userAge : userName)}</div>` : '';
+            const valHtml = `<span class="blank">${userInfo}${val}</span>`;
+            toFill = toFill.replace(`{${matches[i]}}`, valHtml);
+          }
+          this.combos.push(toFill);
         }
-        combos.push(toFill);
-      });
     }
-    this.combos = combos;
   }
-
 
   ngOnDestroy() {
     this.destroy$.next();
