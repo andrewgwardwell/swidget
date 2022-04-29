@@ -20,4 +20,11 @@ import { OwlModule } from 'ngx-owl-carousel';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  // constructor(private injector: Injector){}
+
+  // ngDoBootstrap() {
+  //   const el = createCustomElement(WidgetComponent, { injector: this.injector });
+  //   customElements.define('swidget', el);
+  // }
+}
