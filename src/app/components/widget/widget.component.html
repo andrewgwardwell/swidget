@@ -1,22 +1,40 @@
 <div class="wid-container">
   <owl-carousel
-  [options]="{items: 1, dots: false, navigation: false, loop:true, autoplay:true, center: true}"
-  [items]="combos"
-  [carouselClasses]="['owl-theme', 'row', 'sliding']">
-  <div class="item wid-item" *ngFor="let combo of combos;let i = index">
-    <h3 [innerHTML]="combo"></h3>
-  </div>
-</owl-carousel>
+    [options]="{
+      items: 1,
+      dots: false,
+      navigation: false,
+      loop: true,
+      autoplay: true,
+      center: true
+    }"
+    [items]="combos"
+    [carouselClasses]="['owl-theme', 'row', 'sliding']"
+  >
+    <div class="item wid-item" *ngFor="let combo of combos; let i = index">
+      <div class="text-viewer">
+        <p
+          style="
+            line-height: 80px;
+            font-family: Inter;
+            font-weight: 400;
+            font-size: 36px;
+          "
+          class="view-mode unstyled align-left"
+        >
+          <span
+            style="
+              font-family: Inter;
+              font-weight: 400;
+              font-style: normal;
+              color: rgba(0, 0, 0, 1);
+              font-size: 36px;
+            "
+            [innerHTML]="combo" ></span>
+        </p>
+      </div>
+    </div>
+  </owl-carousel>
 </div>
 
 
-
-<H2>
-  Combinations in the slide show (to demostrate fetch and randomness)
-</H2>
-
-<div class="demo-container">
-  <div class="item demo-item" *ngFor="let combo of combos;let i = index">
-    <h3 [innerHTML]="combo"></h3>
-  </div>
-</div>

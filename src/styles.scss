@@ -3,56 +3,29 @@
   display: flex;
   flex-wrap: wrap;
   .wid-item{
-
+    text-align: center;
     padding: 30px 10px;
 
-    h3{
       .blank{
         position: relative;
         display: inline-block;
       }
       .super{
+        width: 100%;
         position: absolute;
         font-size: 10px;
-        top: -14px;
+        top: -35px;
         display: block;
         text-align: center;
         white-space: nowrap;
         transform: translateX(-25%);
+        color:rgba(0, 0, 0, 1);
+        font-family:pvgj;
+        font-weight:300;
+        font-style:normal;
+        font-size:12px
+      }
     
-      }
-    }
-  }
-
-
-}
-
-.demo-container{
-  display: flex;
-  flex-wrap: wrap;
-  .demo-item{
-    border: 1px solid grey;
-    flex-grow: 1;
-    min-width: 33%;
-    display: flex;
-    justify-content: center;
-    padding: 30px 10px;
-    h3{
-      .blank{
-        position: relative;
-        display: inline-block;
-      }
-      .super{
-        position: absolute;
-        font-size: 10px;
-        top: -14px;
-        display: block;
-        text-align: center;
-        white-space: nowrap;
-        transform: translateX(-25%);
-    
-      }
-    }
   }
 
 
