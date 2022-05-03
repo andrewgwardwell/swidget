@@ -4,9 +4,12 @@
       items: 1,
       dots: false,
       navigation: false,
-      loop: true,
+      rewind: true,
       autoplay: true,
-      center: true
+      autoplaySpeed: 600,
+      center: true,
+      animateOut: 'animate__fadeOut',
+      animateIn: 'animate__fadeIn'
     }"
     [items]="combos"
     [carouselClasses]="['owl-theme', 'row', 'sliding']"

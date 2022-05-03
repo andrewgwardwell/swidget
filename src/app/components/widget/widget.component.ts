@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { WidgetService } from 'src/app/services/widget.service';
@@ -9,6 +9,7 @@ import { WidgetService } from 'src/app/services/widget.service';
   styleUrls: ['./widget.component.scss']
 })
 export class WidgetComponent implements OnInit, OnDestroy {
+  @Input()names?: Array<string>;
   destroy$: Subject<boolean> = new Subject<boolean>();
   libData: Array<{id: string, spaces: string, text: string, commData: any}> = [];
   combos = [];
@@ -27,13 +28,24 @@ export class WidgetComponent implements OnInit, OnDestroy {
 
   processMaster(resp: any){
     resp.forEach(r => {
-      const item = {
+      const item: any = {
         id: r[0],
         spaces: r[1],
         text: r[2],
+        nickname: r[3],
         commData: []
       }
-      this.libData.push(item);
+
+      if(this.names){
+        let nameIncluded = this.names.findIndex((n) => {
+          return n == item.nickname;
+        });
+        if(nameIncluded > -1){
+          this.libData.push(item);
+        }
+      } else if(!this.names) {
+        this.libData.push(item);
+      }
     });
   }
 
@@ -63,7 +75,7 @@ export class WidgetComponent implements OnInit, OnDestroy {
   }
     
   generateRandomCombinations(number){
-    this.combos = [];
+    // this.combos = [];
     if(this.libData && this.libData.length > 0){
         for(let b = 0; b <= number; b++){
           const randomLib = (Math.random() * (this.libData.length - 1 + 1) ) << 0;
