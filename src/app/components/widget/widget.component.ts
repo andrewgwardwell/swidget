@@ -21,7 +21,7 @@ export class WidgetComponent implements OnInit, OnDestroy, AfterViewChecked {
     dots: false,
     navigation: false,
     rewind: true,
-    autoplay: false,
+    autoplay: true,
     autoplaySpeed: 600,
     center: true,
     animateOut: 'animate__fadeOut',
