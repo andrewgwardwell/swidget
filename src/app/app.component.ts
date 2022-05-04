@@ -6,12 +6,10 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  @Input()names?: Array<string>;
+  @Input()keys?: string;
   title = 'switch-wid-app';
 
   ngOnInit(): void {
-      if(!this.names){
-        this.names = null;
-      }
+    console.log(this.keys);
   }
 }

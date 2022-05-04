@@ -1,6 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { OwlCarousel } from 'ngx-owl-carousel';
 import { WidgetService } from 'src/app/services/widget.service';
 
 @Component({
@@ -8,22 +9,51 @@ import { WidgetService } from 'src/app/services/widget.service';
   templateUrl: './widget.component.html',
   styleUrls: ['./widget.component.scss']
 })
-export class WidgetComponent implements OnInit, OnDestroy {
-  @Input()names?: Array<string>;
+export class WidgetComponent implements OnInit, OnDestroy, AfterViewChecked {
+  names?: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
   libData: Array<{id: string, spaces: string, text: string, commData: any}> = [];
   combos = [];
   timer: any;
   refreshInt: any;
-  slideConfig = {"slidesToShow": 4, "slidesToScroll": 4};
+  options = {
+    items: 1,
+    dots: false,
+    navigation: false,
+    rewind: true,
+    autoplay: false,
+    autoplaySpeed: 600,
+    center: true,
+    animateOut: 'animate__fadeOut',
+    animateIn: 'animate__fadeIn',
+    responsive: {
+      0: {
+        items: 1
+      },
+      600: {
+        items: 1
+      },
+      1000: {
+        items: 1
+      }
+    }
+  };
   constructor(public widgetService: WidgetService) { }
-
+  @ViewChild('owlCar') carouselEl: OwlCarousel;
+  ngAfterViewChecked() {
+    console.log(this.carouselEl);
+  }
   ngOnInit(): void {
     this.widgetService.getMaster().subscribe();
     this.widgetService.masterSource.pipe(takeUntil(this.destroy$)).subscribe((response) => {
+      const list = document.getElementById('restricted');
+      if(list && list.innerText){
+        this.names = list.innerText;
+      }
       this.processMaster(response);
       this.fetchLiveData();
     });
+
   }
 
   processMaster(resp: any){
@@ -37,7 +67,8 @@ export class WidgetComponent implements OnInit, OnDestroy {
       }
 
       if(this.names){
-        let nameIncluded = this.names.findIndex((n) => {
+        let namesArray = this.names.split(',');
+        let nameIncluded = namesArray.findIndex((n) => {
           return n == item.nickname;
         });
         if(nameIncluded > -1){
@@ -64,7 +95,7 @@ export class WidgetComponent implements OnInit, OnDestroy {
           this.libData[libDataInd].commData = val.values;
         });
         this.generateRandomCombinations(20);
-        this.refreshInt = setInterval(() => this.refreshData(), 60000);
+        this.refreshInt = setInterval(() => this.refreshData(), 300000);
       }
     );    
   }

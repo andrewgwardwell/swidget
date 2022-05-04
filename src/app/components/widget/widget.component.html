@@ -1,20 +1,12 @@
 <div class="wid-container">
   <owl-carousel
-    [options]="{
-      items: 1,
-      dots: false,
-      navigation: false,
-      rewind: true,
-      autoplay: true,
-      autoplaySpeed: 600,
-      center: true,
-      animateOut: 'animate__fadeOut',
-      animateIn: 'animate__fadeIn'
-    }"
+    [options]="options"
     [items]="combos"
     [carouselClasses]="['owl-theme', 'row', 'sliding']"
+    [items]="combos"
+    #owlCar
   >
-    <div class="item wid-item" *ngFor="let combo of combos; let i = index">
+    <div class="item wid-item" *ngFor="let combo of combos; let i = index" [id]="'slide-'+i">
       <div class="text-viewer">
         <p
           style="
@@ -33,7 +25,7 @@
               color: rgba(0, 0, 0, 1);
               font-size: 36px;
             "
-            [innerHTML]="combo" ></span>
+            [innerHTML]="combo"></span>
         </p>
       </div>
     </div>
