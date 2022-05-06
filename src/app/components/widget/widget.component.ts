@@ -9,7 +9,7 @@ import { WidgetService } from 'src/app/services/widget.service';
   templateUrl: './widget.component.html',
   styleUrls: ['./widget.component.scss']
 })
-export class WidgetComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class WidgetComponent implements OnInit, OnDestroy {
   names?: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
   libData: Array<{id: string, spaces: string, text: string, commData: any}> = [];
@@ -40,9 +40,7 @@ export class WidgetComponent implements OnInit, OnDestroy, AfterViewChecked {
   };
   constructor(public widgetService: WidgetService) { }
   @ViewChild('owlCar') carouselEl: OwlCarousel;
-  ngAfterViewChecked() {
-    console.log(this.carouselEl);
-  }
+
   ngOnInit(): void {
     this.widgetService.getMaster().subscribe();
     this.widgetService.masterSource.pipe(takeUntil(this.destroy$)).subscribe((response) => {
@@ -115,7 +113,9 @@ export class WidgetComponent implements OnInit, OnDestroy, AfterViewChecked {
           let toFill = new String(data.text);
           const values = [];
           const userData = data.commData;
-          const between = new RegExp('(?<={).*?(?=})', 'g');
+          // '(?<={).*?(?=})'          look behind doesn't work in safari
+          // "{([^}]*)"
+          const between = new RegExp("{(.*?)}", 'g');
           const matches = toFill.match(between);
           // pick randomly from commddata
           for(let i = 0; i <= numberOfBlanks; i++){
@@ -127,7 +127,7 @@ export class WidgetComponent implements OnInit, OnDestroy, AfterViewChecked {
             const userAge = userData[randomRow][ageSpot];
             const userInfo = userName ? `<div class="super">${(userName && userAge ? userName+', '+userAge : userName)}</div>` : '';
             const valHtml = `<span class="blank">${userInfo}${val}</span>`;
-            toFill = toFill.replace(`{${matches[i]}}`, valHtml);
+            toFill = toFill.replace(`${matches[i]}`, valHtml);
           }
           this.combos.push(toFill);
         }
