@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -6,6 +6,7 @@ import { WidgetComponent } from './components/widget/widget.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import { OwlModule } from 'ngx-owl-carousel';
+import  { createCustomElement } from '@angular/elements';
 
 @NgModule({
   declarations: [
@@ -18,13 +19,16 @@ import { OwlModule } from 'ngx-owl-carousel';
     OwlModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [WidgetComponent]
 })
 export class AppModule {
-  // constructor(private injector: Injector){}
+  constructor(public injector: Injector){
+    const el = createCustomElement(WidgetComponent, { injector });
+    customElements.define('swidget', el);
+  }
 
-  // ngDoBootstrap() {
-  //   const el = createCustomElement(WidgetComponent, { injector: this.injector });
-  //   customElements.define('swidget', el);
-  // }
+  ngDoBootstrap() {
+
+  }
 }
