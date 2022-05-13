@@ -1,7 +1,5 @@
 import { NgModule, Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
 import { WidgetComponent } from './components/widget/widget.component';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -10,7 +8,6 @@ import  { createCustomElement } from '@angular/elements';
 
 @NgModule({
   declarations: [
-    AppComponent,
     WidgetComponent
   ],
   imports: [
@@ -19,7 +16,6 @@ import  { createCustomElement } from '@angular/elements';
     OwlModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
   entryComponents: [WidgetComponent]
 })
 export class AppModule {
