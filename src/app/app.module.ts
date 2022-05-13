@@ -25,7 +25,7 @@ import  { createCustomElement } from '@angular/elements';
 export class AppModule {
   constructor(public injector: Injector){
     const el = createCustomElement(WidgetComponent, { injector });
-    customElements.define('swidget', el);
+    customElements.define('switchlit-widget', el);
   }
 
   ngDoBootstrap() {
