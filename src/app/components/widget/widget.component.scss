@@ -1,0 +1,30 @@
+.wid-container{
+  .wid-item{
+    text-align: left;
+    padding: 30px 10px;
+
+      .blank{
+        position: relative;
+        display: inline-block;
+        font-weight: bold;
+      }
+      .super{
+        width: 100%;
+        position: absolute;
+        top: -35px;
+        display: block;
+        text-align: center;
+        white-space: nowrap;
+        // transform: translateX(-25%);
+        color:rgba(0, 0, 0, 1);
+        font-family:pvgj;
+        font-weight:300;
+        font-style:normal;
+        font-size: .825rem;
+        text-transform: uppercase;
+      }
+    
+  }
+
+
+}
