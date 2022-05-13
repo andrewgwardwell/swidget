@@ -10,5 +10,5 @@ const concat = require('concat');
   ];
 
   await fs.ensureDir('elements');
-  await concat(files, 'elements/swigdet.js');
+  await concat(files, 'elements/swidget.js');
 })();

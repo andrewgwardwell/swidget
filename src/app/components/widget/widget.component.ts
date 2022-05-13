@@ -10,7 +10,7 @@ import { WidgetService } from 'src/app/services/widget.service';
   styleUrls: ['./widget.component.scss']
 })
 export class WidgetComponent implements OnInit, OnDestroy {
-  names?: any;
+  @Input() names?: string;
   destroy$: Subject<boolean> = new Subject<boolean>();
   libData: Array<{id: string, spaces: string, text: string, commData: any}> = [];
   combos = [];
@@ -44,10 +44,6 @@ export class WidgetComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.widgetService.getMaster().subscribe();
     this.widgetService.masterSource.pipe(takeUntil(this.destroy$)).subscribe((response) => {
-      const list = document.getElementById('restricted');
-      if(list && list.innerText){
-        this.names = list.innerText;
-      }
       this.processMaster(response);
       this.fetchLiveData();
     });
