@@ -15,19 +15,20 @@ export class WidgetComponent implements OnInit, OnDestroy {
   @Input() nav?: boolean;
   @Input() autoplay?: boolean;
   @Input() loop?: boolean;
-  @Input() doFetch?: boolean;
+  @Input() fetch?: boolean;
   destroy$: Subject<boolean> = new Subject<boolean>();
   libData: Array<{id: string, spaces: string, text: string, commData: any}> = [];
   combos = [];
   timer: any;
   refreshInt: any;
   options: {};
+  doFetch: boolean;
 
   constructor(public widgetService: WidgetService) { }
   @ViewChild('owlCar') carouselEl: OwlCarousel;
 
   ngOnInit(): void {
-    this.doFetch = this.doFetch ? this.doFetch : true;
+    this.doFetch = this.fetch ? this.fetch : false;
     this.options = {
       items: 1,
       dots: this.dots ? this.dots : false,
