@@ -28,3 +28,25 @@
 
 
 }
+.wid-text-viewer-wrapper{
+  line-height: 80px;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 42px;
+}
+.wid-text-viewer-inner{
+  font-family: Inter;
+  font-weight: 400;
+  font-style: normal;
+  color: rgba(0, 0, 0, 1);
+  font-size: 42px;
+}
+
+.owl-nav .owl-next,
+.owl-nav .owl-prev{
+  display: inline-block;
+  zoom: 1;
+  margin: 5px;
+  padding: 3px 10px;
+  font-size: 42px;
+}

@@ -11,37 +11,47 @@ import { WidgetService } from 'src/app/services/widget.service';
 })
 export class WidgetComponent implements OnInit, OnDestroy {
   @Input() names?: string;
+  @Input() dots?: boolean;
+  @Input() nav?: boolean;
+  @Input() autoplay?: boolean;
+  @Input() loop?: boolean;
   destroy$: Subject<boolean> = new Subject<boolean>();
   libData: Array<{id: string, spaces: string, text: string, commData: any}> = [];
   combos = [];
   timer: any;
   refreshInt: any;
-  options = {
-    items: 1,
-    dots: false,
-    navigation: false,
-    rewind: true,
-    autoplay: true,
-    autoplaySpeed: 600,
-    center: true,
-    animateOut: 'animate__fadeOut',
-    animateIn: 'animate__fadeIn',
-    responsive: {
-      0: {
-        items: 1
-      },
-      600: {
-        items: 1
-      },
-      1000: {
-        items: 1
-      }
-    }
-  };
+  options: {};
+
   constructor(public widgetService: WidgetService) { }
   @ViewChild('owlCar') carouselEl: OwlCarousel;
 
   ngOnInit(): void {
+    this.options = {
+      items: 1,
+      dots: this.dots ? this.dots : false,
+      nav: this.nav ? this.nav : false,
+      rewind: true,
+      loop: this.loop ? this.loop : false,
+      autoplay: this.autoplay ? this.autoplay : false,
+      autoplaySpeed: 600,
+      center: true,
+      animateOut: 'animate__fadeOut',
+      animateIn: 'animate__fadeIn',
+      navText : ["<i class='fa-solid fa-chevron-left'></i>","<i class='fa-solid fa-chevron-right'></i>"],
+      responsive: {
+        0: {
+          items: 1,
+          nav: false
+        },
+        600: {
+          items: 1,
+          nav: false
+        },
+        1000: {
+          items: 1
+        }
+      }
+    };
     this.widgetService.getMaster().subscribe();
     this.widgetService.masterSource.pipe(takeUntil(this.destroy$)).subscribe((response) => {
       this.processMaster(response);

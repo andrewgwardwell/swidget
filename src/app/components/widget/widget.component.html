@@ -5,27 +5,12 @@
     [carouselClasses]="['owl-theme', 'row', 'sliding']"
     [items]="combos"
     #owlCar
+    [ngClass]="{'with-arrows': nav}"
   >
     <div class="item wid-item" *ngFor="let combo of combos; let i = index" [id]="'slide-'+i">
-      <div class="text-viewer">
-        <p
-          style="
-            line-height: 80px;
-            font-family: Inter;
-            font-weight: 400;
-            font-size: 42px;
-          "
-          class="view-mode unstyled"
-        >
-          <span
-            style="
-              font-family: Inter;
-              font-weight: 400;
-              font-style: normal;
-              color: rgba(0, 0, 0, 1);
-              font-size: 42px;
-            "
-            [innerHTML]="combo"></span>
+      <div class="wid-text-viewer">
+        <p class="view-mode unstyled wid-text-viewer-wrapper">
+          <span class="text-viewer-inner" [innerHTML]="combo"></span>
         </p>
       </div>
     </div>
