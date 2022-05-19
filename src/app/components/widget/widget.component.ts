@@ -140,6 +140,8 @@ export class WidgetComponent implements OnInit, OnDestroy {
               const userInfo = userName ? `<div class="super">${(userName && userAge ? userName+', '+userAge : userName)}</div>` : '';
               const valHtml = `<span class="blank">${userInfo}${val}</span>`;
               toFill = toFill.replace(`${matches[i]}`, valHtml);
+            } else {
+              console.info(`issue with row ${randomRow} of word ${i} and ${data.text.substring(0, 5)}`)
             }
           }
           this.combos.push(toFill);
