@@ -131,14 +131,16 @@ export class WidgetComponent implements OnInit, OnDestroy {
           // pick randomly from commddata
           for(let i = 0; i <= numberOfBlanks; i++){
             const randomRow = (Math.random() * (userData.length - 1 + 1) ) << 0;
-            const val = userData[randomRow][i];
-            const nameSpot = numberOfBlanks;
-            const ageSpot = numberOfBlanks + 1;
-            const userName = userData[randomRow][nameSpot];
-            const userAge = userData[randomRow][ageSpot];
-            const userInfo = userName ? `<div class="super">${(userName && userAge ? userName+', '+userAge : userName)}</div>` : '';
-            const valHtml = `<span class="blank">${userInfo}${val}</span>`;
-            toFill = toFill.replace(`${matches[i]}`, valHtml);
+            if(userData && userData[randomRow]){
+              const val = userData[randomRow][i];
+              const nameSpot = numberOfBlanks;
+              const ageSpot = numberOfBlanks + 1;
+              const userName = userData[randomRow][nameSpot];
+              const userAge = userData[randomRow][ageSpot];
+              const userInfo = userName ? `<div class="super">${(userName && userAge ? userName+', '+userAge : userName)}</div>` : '';
+              const valHtml = `<span class="blank">${userInfo}${val}</span>`;
+              toFill = toFill.replace(`${matches[i]}`, valHtml);
+            }
           }
           this.combos.push(toFill);
         }
