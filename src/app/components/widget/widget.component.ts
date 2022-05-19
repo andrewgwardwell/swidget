@@ -15,6 +15,7 @@ export class WidgetComponent implements OnInit, OnDestroy {
   @Input() nav?: boolean;
   @Input() autoplay?: boolean;
   @Input() loop?: boolean;
+  @Input() doFetch?: boolean;
   destroy$: Subject<boolean> = new Subject<boolean>();
   libData: Array<{id: string, spaces: string, text: string, commData: any}> = [];
   combos = [];
@@ -26,6 +27,7 @@ export class WidgetComponent implements OnInit, OnDestroy {
   @ViewChild('owlCar') carouselEl: OwlCarousel;
 
   ngOnInit(): void {
+    this.doFetch = this.doFetch ? this.doFetch : true;
     this.options = {
       items: 1,
       dots: this.dots ? this.dots : false,
@@ -99,7 +101,9 @@ export class WidgetComponent implements OnInit, OnDestroy {
           this.libData[libDataInd].commData = val.values;
         });
         this.generateRandomCombinations(20);
-        this.refreshInt = setInterval(() => this.refreshData(), 300000);
+        if(this.doFetch){
+          this.refreshInt = setInterval(() => this.refreshData(), 300000);
+        }
       }
     );    
   }
