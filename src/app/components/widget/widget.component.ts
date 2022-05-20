@@ -3,6 +3,7 @@ import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { OwlCarousel } from 'ngx-owl-carousel';
 import { WidgetService } from 'src/app/services/widget.service';
+import * as random from 'lodash.random';
 
 @Component({
   selector: 'app-widget',
@@ -118,20 +119,19 @@ export class WidgetComponent implements OnInit, OnDestroy {
     // this.combos = [];
     if(this.libData && this.libData.length > 0){
         for(let b = 0; b <= number; b++){
-          const randomLib = (Math.random() * (this.libData.length - 1 + 1) ) << 0;
+          const randomLib = random(0, this.libData.length-1);
           const data = this.libData[randomLib];
           const numberOfBlanks = parseInt(data.spaces);
           let toFill = new String(data.text);
           const values = [];
           const userData = data.commData;
-          // '(?<={).*?(?=})'          look behind doesn't work in safari
-          // "{([^}]*)"
           const between = new RegExp("{(.*?)}", 'g');
           const matches = toFill.match(between);
-          // pick randomly from commddata
-          for(let i = 0; i <= numberOfBlanks; i++){
-            const randomRow = (Math.random() * (userData.length - 1 + 1) ) << 0;
+          let matchCount = 0;
+          for(let i = 0; i < numberOfBlanks; i++){
+            const randomRow = random(0, userData.length-1);
             if(userData && userData[randomRow]){
+              matchCount++;
               const val = userData[randomRow][i];
               const nameSpot = numberOfBlanks;
               const ageSpot = numberOfBlanks + 1;
@@ -140,11 +140,11 @@ export class WidgetComponent implements OnInit, OnDestroy {
               const userInfo = userName ? `<div class="super">${(userName && userAge ? userName+', '+userAge : userName)}</div>` : '';
               const valHtml = `<span class="blank">${userInfo}${val}</span>`;
               toFill = toFill.replace(`${matches[i]}`, valHtml);
-            } else {
-              console.info(`issue with row ${randomRow} of word ${i} and ${data.text.substring(0, 5)}`)
             }
           }
-          this.combos.push(toFill);
+          if(matchCount == numberOfBlanks){
+            this.combos.push(toFill);
+          }
         }
     }
   }
